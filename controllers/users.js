@@ -5,11 +5,6 @@ dns.setServers(["1.1.1.1", "8.8.8.8"]);
 const getAll = async (req, res) => {
   // #swagger.tags=["users"]
   try {
-    if (!ObjectId.isValid(req.params.id)) {
-      res
-        .status(500)
-        .json({ message: "Please enter a valid ID to find the user" });
-    }
     const db = mongodb.getDatabase();
     const result = await db.collection("bloggers").find({}).toArray();
     res.setHeader("Content-type", "application/json");
