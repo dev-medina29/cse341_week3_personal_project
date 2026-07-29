@@ -42,3 +42,10 @@ Content-Type: application/json
 
 ### Delete a user
 DELETE http://localhost:2026/users/6a68d1a28455
+
+### get all posts
+
+GET http://localhost:2026/posts
+
+### get by ID
+GET http://localhost:2026/posts/6a68dd4a84332237b68d156a
