@@ -41,4 +41,4 @@ Content-Type: application/json
 }
 
 ### Delete a user
-DELETE http://localhost:2026/users/6a68d1a284332237b68d1555
+DELETE http://localhost:2026/users/6a68d1a28455

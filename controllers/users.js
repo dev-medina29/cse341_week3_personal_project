@@ -5,6 +5,11 @@ dns.setServers(["1.1.1.1", "8.8.8.8"]);
 const getAll = async (req, res) => {
   // #swagger.tags=["users"]
   try {
+    if (!ObjectId.isValid(req.params.id)) {
+      res
+        .status(500)
+        .json({ message: "Please enter a valid ID to find the user" });
+    }
     const db = mongodb.getDatabase();
     const result = await db.collection("bloggers").find({}).toArray();
     res.setHeader("Content-type", "application/json");
@@ -18,6 +23,11 @@ const getAll = async (req, res) => {
 const getSingle = async (req, res) => {
   // #swagger.tags=["users"]
   try {
+    if (!ObjectId.isValid(req.params.id)) {
+      res
+        .status(500)
+        .json({ message: "Please enter a valid ID to find the user" });
+    }
     const userid = new ObjectId(req.params.id);
     const db = mongodb.getDatabase();
     const result = await db
@@ -35,6 +45,11 @@ const getSingle = async (req, res) => {
 const updateUser = async (req, res) => {
   // #swagger.tags=["users"]
   try {
+    if (!ObjectId.isValid(req.params.id)) {
+      res
+        .status(500)
+        .json({ message: "Please enter a valid ID to find the user" });
+    }
     const userId = new ObjectId(req.params.id);
     const user = {
       username: req.body.username,
@@ -90,6 +105,11 @@ const createUser = async (req, res) => {
 
 const deleteUser = async (req, res) => {
   // #swagger.tags=["users"]
+  if (!ObjectId.isValid(req.params.id)) {
+    res
+      .status(500)
+      .json({ message: "Please enter a valid ID to find the user" });
+  }
   const userId = new ObjectId(req.params.id);
   const response = await mongodb
     .getDatabase()
