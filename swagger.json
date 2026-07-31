@@ -5,11 +5,9 @@
     "description": "Users API",
     "version": "1.0.0"
   },
-  "host": "cse341-week3-personal-project.onrender.com",
+  "host": "localhost:2026",
   "basePath": "/",
-  "schemes": [
-    "https"
-  ],
+  "schemes": ["https"],
   "paths": {
     "/": {
       "get": {
@@ -33,13 +31,9 @@
     },
     "/users/": {
       "get": {
-        "tags": [
-          "users"
-        ],
+        "tags": ["users"],
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "responses": {
           "200": {
             "description": "OK"
@@ -50,9 +44,7 @@
         }
       },
       "post": {
-        "tags": [
-          "users"
-        ],
+        "tags": ["users"],
         "description": "",
         "parameters": [
           {
@@ -98,13 +90,9 @@
     },
     "/users/{id}": {
       "get": {
-        "tags": [
-          "users"
-        ],
+        "tags": ["users"],
         "description": "",
-        "produces": [
-          "application/json"
-        ],
+        "produces": ["application/json"],
         "parameters": [
           {
             "name": "id",
@@ -123,9 +111,7 @@
         }
       },
       "put": {
-        "tags": [
-          "users"
-        ],
+        "tags": ["users"],
         "description": "",
         "parameters": [
           {
@@ -178,9 +164,7 @@
         }
       },
       "delete": {
-        "tags": [
-          "users"
-        ],
+        "tags": ["users"],
         "description": "",
         "parameters": [
           {
@@ -197,6 +181,66 @@
           "500": {
             "description": "Internal Server Error"
           }
+        }
+      }
+    }
+  },
+
+  "/posts/": {
+    "get": {
+      "tags": ["posts"],
+      "description": "",
+      "produces": ["application/json"],
+      "responses": {
+        "200": {
+          "description": "OK"
+        },
+        "500": {
+          "description": "Internal Server Error"
+        }
+      }
+    },
+    "post": {
+      "tags": ["posts"],
+      "description": "",
+      "parameters": [
+        {
+          "name": "body",
+          "in": "body",
+          "schema": {
+            "type": "object",
+            "properties": {
+              "username": {
+                "example": "any"
+              },
+              "email": {
+                "example": "any"
+              },
+              "password": {
+                "example": "any"
+              },
+              "firstName": {
+                "example": "any"
+              },
+              "lastName": {
+                "example": "any"
+              },
+              "bio": {
+                "example": "any"
+              },
+              "role": {
+                "example": "any"
+              }
+            }
+          }
+        }
+      ],
+      "responses": {
+        "200": {
+          "description": "OK"
+        },
+        "500": {
+          "description": "Internal Server Error"
         }
       }
     }

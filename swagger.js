@@ -5,8 +5,8 @@ const doc = {
     title: "Users API",
     description: "Users API",
   },
-  //   host: "localhost:2909",
-  host: "cse341-week3-personal-project.onrender.com",
+  host: "localhost:2026",
+  // host: "cse341-week3-personal-project.onrender.com",
   schemes: ["https"],
 };
 
