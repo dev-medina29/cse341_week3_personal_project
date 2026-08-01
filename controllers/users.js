@@ -20,7 +20,7 @@ const getSingle = async (req, res) => {
   try {
     if (!ObjectId.isValid(req.params.id)) {
       res
-        .status(500)
+        .status(400)
         .json({ message: "Please enter a valid ID to find the user" });
     }
     const userid = new ObjectId(req.params.id);
@@ -42,7 +42,7 @@ const updateUser = async (req, res) => {
   try {
     if (!ObjectId.isValid(req.params.id)) {
       res
-        .status(500)
+        .status(400)
         .json({ message: "Please enter a valid ID to find the user" });
     }
     const userId = new ObjectId(req.params.id);
@@ -76,46 +76,65 @@ const updateUser = async (req, res) => {
 
 const createUser = async (req, res) => {
   // #swagger.tags=["users"]
-  const user = {
-    username: req.body.username,
-    email: req.body.email,
-    password: req.body.password,
-    firstName: req.body.firstName,
-    lastName: req.body.lastName,
-    bio: req.body.bio,
-    role: req.body.role,
-  };
-  const response = await mongodb
-    .getDatabase()
-    .collection("bloggers")
-    .insertOne(user);
-  if (response.acknowledged) {
-    res.status(200).json({ message: "User created successfully " });
-  } else {
+  try {
+    const user = {
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      bio: req.body.bio,
+      role: req.body.role,
+    };
+
+    // Simple validation for required fields
+    if (!user.username || !user.email || !user.password) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
+    const response = await mongodb
+      .getDatabase()
+      .collection("bloggers")
+      .insertOne(user);
+
+    if (response.acknowledged) {
+      res.status(200).json({ message: "User created successfully" });
+    } else {
+      res
+        .status(500)
+        .json(response.error || "Some error occurred while creating the user");
+    }
+  } catch (error) {
+    console.error(error);
     res
       .status(500)
-      .json(response.error || "Some error occured while creating the user");
+      .json({ message: "Failed to create user", error: error.message });
   }
 };
 
 const deleteUser = async (req, res) => {
   // #swagger.tags=["users"]
-  if (!ObjectId.isValid(req.params.id)) {
+  try {
+    if (!ObjectId.isValid(req.params.id)) {
+      return res.status(400).json({ message: "Invalid ID format" });
+    }
+
+    const userId = new ObjectId(req.params.id);
+    const response = await mongodb
+      .getDatabase()
+      .collection("bloggers")
+      .deleteOne({ _id: userId }, true);
+
+    if (response.deletedCount > 0) {
+      res.status(200).json({ message: "User deleted successfully" });
+    } else {
+      res.status(404).json({ message: "User not found" });
+    }
+  } catch (error) {
+    console.error(error);
     res
       .status(500)
-      .json({ message: "Please enter a valid ID to find the user" });
-  }
-  const userId = new ObjectId(req.params.id);
-  const response = await mongodb
-    .getDatabase()
-    .collection("bloggers")
-    .deleteOne({ _id: userId }, true);
-  if (response.deletedCount > 0) {
-    res.status(200).json({ message: "User deleted successfully " });
-  } else {
-    res
-      .status(500)
-      .json(response.error || "Some error occured while deleting the user");
+      .json({ message: "Failed to delete user", error: error.message });
   }
 };
 
