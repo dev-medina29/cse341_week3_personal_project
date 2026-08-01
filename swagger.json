@@ -7,7 +7,7 @@
   },
   "host": "cse341-week3-personal-project.onrender.com",
   "basePath": "/",
-  "schemes": ["http", "https"],
+  "schemes": ["https"],
   "paths": {
     "/": {
       "get": {
